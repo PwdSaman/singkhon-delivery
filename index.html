@@ -45,26 +45,23 @@
             </div>
 
             <form id="loginForm" onsubmit="handleLogin(event)">
-                <div class="form-group">
-                    <label for="username" id="labelUsername">ชื่อผู้ใช้ (Username)</label>
-                    <div class="input-phone-container">
-                        <input type="text" id="username" placeholder="กรอกชื่อผู้ใช้ของคุณ" required>
-                        <button type="button" id="btnRequestOtp" onclick="requestOtp()">ขอ OTP</button>
-                    </div>
-                </div>
                 
-                <div class="form-group" id="otpGroup">
-                    <label for="otpCode">รหัส OTP</label>
-                    <input type="text" id="otpCode" placeholder="กรอกรหัส OTP 6 หลัก" maxlength="6">
+                <div class="form-group" id="usernameGroup">
+                    <label for="username" id="labelUsername">ชื่อผู้ใช้ (Username)</label>
+                    <input type="text" id="username" placeholder="กรอกชื่อผู้ใช้ของคุณ">
                 </div>
                 
                 <div class="form-group" id="passwordGroup">
                     <label for="password">รหัสผ่าน (Password)</label>
-                    <input type="password" id="password" placeholder="กรอกรหัสผ่าน" required>
+                    <input type="password" id="password" placeholder="กรอกรหัสผ่าน">
                 </div>
 
                 <button type="submit" class="btn-login" id="btnSubmitModal">
                     🔓 เข้าสู่ระบบ
+                </button>
+
+                <button type="button" class="btn-login btn-google" id="btnGoogleLogin" onclick="handleGoogleLogin()">
+                    <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google"> เข้าสู่ระบบด้วย Google
                 </button>
                 
                 <button type="button" class="btn-cancel" onclick="closeLoginModal()">
@@ -78,18 +75,26 @@
             <h1>Singkhon Delivery</h1>
         </div>
 
-        <div class="main-content">
+        <div class="main-content" id="guestView">
             <div class="app-logo">🛵</div>
             <h2>ยินดีต้อนรับ</h2>
             <p>ระบบจัดการสำหรับร้านค้า ไรเดอร์ และลูกค้า <br>กรุณากดปุ่มเมนู <span>☰</span> มุมซ้ายบนเพื่อเข้าสู่ระบบ</p>
         </div>
+
+        <div class="main-content profile-content" id="userProfile" style="display: none;">
+            <img id="profileImage" src="" alt="Profile Avatar">
+            <h2 id="profileName">Name</h2>
+            <p id="profileEmail">email@example.com</p>
+            <br>
+            <button class="btn-cancel btn-logout" onclick="handleLogout()">
+                🚪 ออกจากระบบ
+            </button>
+        </div>
         
-        <button class="btn-login" onclick="openLoginModal('customer')">
-            📱 เข้าสู่ระบบด้วย SMS (สำหรับลูกค้า)
+        <button class="btn-login" id="mainLoginBtn" onclick="openLoginModal('customer')">
+            🛍️ เข้าสู่ระบบลูกค้า
         </button>
     </div>
-
-<div id="recaptcha-container"></div>
 
 <script type="module" src="firebase-auth.js"></script>
 <script src="script.js"></script>
