@@ -1,0 +1,323 @@
+:root {
+    --bg-color: #f4f7f6;
+    --navy-dark: #0f172a;
+    --navy-light: #1e293b;
+    --green-primary: #10b981;
+    --green-hover: #059669;
+    --text-white: #ffffff;
+    --text-gray: #94a3b8;
+    --warning-gold: #f59e0b;
+    --shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.2);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Prompt', sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.app-container {
+    background: var(--navy-dark);
+    width: 100%;
+    max-width: 400px;
+    height: 600px;
+    border-radius: 24px;
+    padding: 30px 24px;
+    box-shadow: var(--shadow);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    z-index: 5;
+}
+
+.menu-toggle {
+    font-size: 1.8rem;
+    color: var(--green-primary);
+    cursor: pointer;
+    transition: transform 0.2s;
+    user-select: none;
+}
+
+.menu-toggle:hover {
+    transform: scale(1.1);
+}
+
+h1 {
+    color: var(--text-white);
+    font-size: 1.6rem;
+    font-weight: 600;
+}
+
+.main-content {
+    text-align: center;
+    margin: auto 0;
+    z-index: 5;
+}
+
+.main-content h2 {
+    color: var(--text-white);
+    font-size: 1.4rem;
+    margin-bottom: 8px;
+}
+
+.main-content p {
+    color: var(--text-gray);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.main-content p span {
+    color: var(--green-primary);
+}
+
+.app-logo {
+    font-size: 4.5rem;
+    margin-bottom: 10px;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.btn-login {
+    width: 100%;
+    background: linear-gradient(135deg, var(--green-primary), var(--green-hover));
+    color: var(--text-white);
+    border: none;
+    padding: 16px 20px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    z-index: 5;
+}
+
+.btn-login:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(16, 185, 129, 0.5);
+    filter: brightness(1.1);
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.side-menu {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 75%;
+    height: 100%;
+    background: var(--navy-light);
+    box-shadow: 5px 0 25px rgba(0,0,0,0.3);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 20;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.app-container.menu-open .side-menu { left: 0; }
+.app-container.menu-open .overlay { opacity: 1; visibility: visible; }
+
+.close-menu {
+    align-self: flex-end;
+    font-size: 1.5rem;
+    color: var(--text-gray);
+    cursor: pointer;
+}
+
+.menu-title {
+    color: var(--text-white);
+    font-size: 1.3rem;
+    font-weight: 600;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 10px;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    color: var(--text-gray);
+    text-decoration: none;
+    font-size: 1.1rem;
+    padding: 12px 15px;
+    border-radius: 10px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.menu-item:hover {
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--green-primary);
+    padding-left: 20px;
+}
+
+.modal-login {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--navy-dark);
+    z-index: 30;
+    padding: 40px 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transform: translateY(100%);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.app-container.modal-open .modal-login {
+    transform: translateY(0);
+}
+
+.modal-header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.modal-header h2 {
+    color: var(--text-white);
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+}
+
+#modalSubTitle {
+    color: var(--text-gray);
+    font-size: 0.9rem;
+}
+
+.admin-notice {
+    background: rgba(245, 158, 11, 0.1);
+    border: 1px solid var(--warning-gold);
+    border-radius: 10px;
+    padding: 10px 12px;
+    color: var(--warning-gold);
+    font-size: 0.85rem;
+    text-align: center;
+    margin-bottom: 25px;
+    line-height: 1.4;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    color: var(--text-gray);
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+}
+
+.input-phone-container {
+    display: flex;
+    gap: 10px;
+}
+
+.input-phone-container input {
+    flex: 1;
+}
+
+.form-group input {
+    width: 100%;
+    background: var(--navy-light);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 14px 16px;
+    border-radius: 12px;
+    color: var(--text-white);
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.form-group input:focus {
+    border-color: var(--green-primary);
+}
+
+/* สไตล์ปุ่ม ขอ OTP */
+#btnRequestOtp {
+    background: var(--navy-light);
+    color: var(--green-primary);
+    border: 1px solid var(--green-primary);
+    padding: 0 15px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+}
+
+#btnRequestOtp:hover:not(:disabled) {
+    background: rgba(16, 185, 129, 0.1);
+}
+
+#btnRequestOtp:disabled {
+    border-color: var(--text-gray);
+    color: var(--text-gray);
+    cursor: not-allowed;
+}
+
+#btnSubmitModal {
+    margin-top: 10px;
+}
+
+.btn-cancel {
+    background: transparent;
+    color: var(--text-gray);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    width: 100%;
+    padding: 14px;
+    border-radius: 12px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 12px;
+    transition: all 0.2s;
+}
+
+.btn-cancel:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-white);
+}
