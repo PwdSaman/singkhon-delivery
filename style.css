@@ -32,12 +32,11 @@ body {
     max-width: 400px;
     height: 600px;
     border-radius: 24px;
-    padding: 30px 24px;
+    padding: 20px 24px !important;
     box-shadow: var(--shadow);
     border: 1px solid rgba(255, 255, 255, 0.05);
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     position: relative;
     overflow: hidden;
 }
@@ -47,6 +46,7 @@ body {
     align-items: center;
     gap: 15px;
     z-index: 5;
+    margin-bottom: 10px;
 }
 
 .menu-toggle {
@@ -67,10 +67,26 @@ h1 {
     font-weight: 600;
 }
 
-.main-content {
-    text-align: center;
-    margin: auto 0;
-    z-index: 5;
+/* Scrollable Main Area */
+.main-content-scroll {
+    width: 100%;
+    height: calc(100% - 45px);
+    overflow-y: auto;
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-content-scroll::-webkit-scrollbar {
+    width: 0px; /* Hide scrollbar */
+}
+
+/* Guest View (Centered) */
+#guestView {
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    margin-top: 40px;
 }
 
 .main-content h2 {
@@ -100,6 +116,11 @@ h1 {
     50% { transform: translateY(-10px); }
 }
 
+.text-center {
+    text-align: center;
+}
+
+/* Buttons */
 .btn-login {
     width: 100%;
     background: linear-gradient(135deg, var(--green-primary), var(--green-hover));
@@ -125,6 +146,42 @@ h1 {
     filter: brightness(1.1);
 }
 
+.btn-google {
+    background: #ffffff !important;
+    color: #475569 !important;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1) !important;
+}
+
+.btn-google:hover {
+    background: #f8fafc !important;
+    color: #0f172a !important;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15) !important;
+}
+
+.btn-google img {
+    width: 24px;
+    height: 24px;
+}
+
+.btn-cancel {
+    background: transparent;
+    color: var(--text-gray);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    width: 100%;
+    padding: 14px;
+    border-radius: 12px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 12px;
+    transition: all 0.2s;
+}
+
+.btn-cancel:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-white);
+}
+
+/* Side Menu & Overlay */
 .overlay {
     position: absolute;
     top: 0;
@@ -143,7 +200,7 @@ h1 {
     position: absolute;
     top: 0;
     left: -100%;
-    width: 75%;
+    width: 80%;
     height: 100%;
     background: var(--navy-light);
     box-shadow: 5px 0 25px rgba(0,0,0,0.3);
@@ -152,7 +209,8 @@ h1 {
     padding: 40px 20px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 15px;
+    overflow-y: auto;
 }
 
 .app-container.menu-open .side-menu { left: 0; }
@@ -163,14 +221,16 @@ h1 {
     font-size: 1.5rem;
     color: var(--text-gray);
     cursor: pointer;
+    margin-bottom: 10px;
 }
 
 .menu-title {
     color: var(--text-white);
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     font-weight: 600;
     border-bottom: 2px solid rgba(255, 255, 255, 0.05);
     padding-bottom: 10px;
+    margin-bottom: 5px;
 }
 
 .menu-item {
@@ -178,8 +238,7 @@ h1 {
     align-items: center;
     gap: 15px;
     color: var(--text-gray);
-    text-decoration: none;
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     padding: 12px 15px;
     border-radius: 10px;
     transition: all 0.2s ease;
@@ -192,6 +251,58 @@ h1 {
     padding-left: 20px;
 }
 
+.logout-item {
+    margin-top: 20px;
+    color: var(--warning-gold) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 15px !important;
+}
+
+.logout-item:hover {
+    background: rgba(245, 158, 11, 0.1);
+    color: var(--warning-gold);
+}
+
+/* Profile in Menu */
+.menu-profile-box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    margin-bottom: 10px;
+}
+
+#menuProfileImage {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: 2px solid var(--green-primary);
+    object-fit: cover;
+}
+
+.menu-profile-box h4 {
+    color: var(--text-white);
+    font-size: 0.95rem;
+    margin: 0;
+    max-width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.menu-profile-box p {
+    color: var(--text-gray);
+    font-size: 0.75rem;
+    margin: 0;
+    max-width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Modal Login */
 .modal-login {
     position: absolute;
     top: 0;
@@ -252,15 +363,6 @@ h1 {
     margin-bottom: 8px;
 }
 
-.input-phone-container {
-    display: flex;
-    gap: 10px;
-}
-
-.input-phone-container input {
-    flex: 1;
-}
-
 .form-group input {
     width: 100%;
     background: var(--navy-light);
@@ -277,71 +379,9 @@ h1 {
     border-color: var(--green-primary);
 }
 
-/* สไตล์ปุ่ม ขอ OTP */
-#btnRequestOtp {
-    background: var(--navy-light);
-    color: var(--green-primary);
-    border: 1px solid var(--green-primary);
-    padding: 0 15px;
-    border-radius: 12px;
-    font-size: 0.9rem;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: all 0.2s;
-}
-
-#btnRequestOtp:hover:not(:disabled) {
-    background: rgba(16, 185, 129, 0.1);
-}
-
-#btnRequestOtp:disabled {
-    border-color: var(--text-gray);
-    color: var(--text-gray);
-    cursor: not-allowed;
-}
-
-#btnSubmitModal {
-    margin-top: 10px;
-}
-
-.btn-cancel {
-    background: transparent;
-    color: var(--text-gray);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    width: 100%;
-    padding: 14px;
-    border-radius: 12px;
-    font-size: 1rem;
-    cursor: pointer;
-    margin-top: 12px;
-    transition: all 0.2s;
-}
-
-.btn-cancel:hover {
-    background: rgba(255, 255, 255, 0.05);
-    color: var(--text-white);
-}
-/* นำโค้ดชุดนี้ไปวาง ต่อท้าย ไฟล์ style.css เดิม */
-
-.btn-google {
-    background: #ffffff;
-    color: #475569;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-.btn-google:hover {
-    background: #f8fafc;
-    color: #0f172a;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
-}
-
-.btn-google img {
-    width: 24px;
-    height: 24px;
-}
-
-.profile-content {
-    animation: fadeIn 0.5s ease-in-out;
+/* Dashboard Sections */
+.dashboard-section {
+    animation: fadeIn 0.4s ease-in-out;
 }
 
 @keyframes fadeIn {
@@ -349,35 +389,57 @@ h1 {
     to { opacity: 1; transform: translateY(0); }
 }
 
-#profileImage {
-    width: 90px;
-    height: 90px;
-    border-radius: 50%;
-    border: 4px solid var(--green-primary);
-    object-fit: cover;
-    margin-bottom: 15px;
-    box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
-}
-
-#profileName {
-    font-size: 1.5rem;
+.dashboard-section h3 {
     color: var(--text-white);
-    margin-bottom: 5px;
-}
-
-#profileEmail {
-    font-size: 0.95rem;
-    color: var(--text-gray);
-}
-
-.btn-logout {
-    border: 1px solid rgba(245, 158, 11, 0.5);
-    color: var(--warning-gold);
+    margin-bottom: 15px;
+    font-size: 1.2rem;
     font-weight: 600;
 }
 
-.btn-logout:hover {
-    background: rgba(245, 158, 11, 0.1);
-    color: var(--warning-gold);
-    border-color: var(--warning-gold);
+.info-card {
+    background: var(--navy-light);
+    border-radius: 12px;
+    padding: 16px;
+    color: var(--text-white);
+    margin-bottom: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.text-muted {
+    color: var(--text-gray) !important;
+    text-align: center;
+    font-size: 0.95rem;
+    padding: 20px 0;
+}
+
+/* Rider List System */
+.rider-header-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.rider-count-badge {
+    background: var(--green-primary);
+    color: var(--text-white);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.rider-card {
+    background: var(--navy-light);
+    border-left: 4px solid var(--green-primary);
+    border-radius: 0 12px 12px 0;
+    padding: 14px;
+    margin-bottom: 10px;
+    color: var(--text-white);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.status-online {
+    color: var(--green-primary);
+    font-size: 0.85rem;
 }

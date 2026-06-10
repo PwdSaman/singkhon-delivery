@@ -18,18 +18,53 @@
 
         <nav class="side-menu">
             <div class="close-menu" onclick="toggleMenu()">✕</div>
-            <div class="menu-title">บริการของเรา</div>
             
-            <div class="menu-item" onclick="openLoginModal('customer')">
-                <span class="icon">🛍️</span> สำหรับลูกค้า
+            <div id="guestMenu">
+                <div class="menu-title">บริการของเรา</div>
+                
+                <div class="menu-item" onclick="openLoginModal('customer')">
+                    <span class="icon">🛍️</span> สำหรับลูกค้า
+                </div>
+                
+                <div class="menu-item" onclick="openLoginModal('merchant')">
+                    <span class="icon">🏪</span> สำหรับร้านค้า
+                </div>
+                
+                <div class="menu-item" onclick="openLoginModal('rider')">
+                    <span class="icon">🛵</span> สำหรับไรเดอร์
+                </div>
             </div>
-            
-            <div class="menu-item" onclick="openLoginModal('merchant')">
-                <span class="icon">🏪</span> สำหรับร้านค้า
-            </div>
-            
-            <div class="menu-item" onclick="openLoginModal('rider')">
-                <span class="icon">🛵</span> สำหรับไรเดอร์
+
+            <div id="userMenu" style="display: none;">
+                <div class="menu-profile-box">
+                    <img id="menuProfileImage" src="" alt="Profile">
+                    <div>
+                        <h4 id="menuProfileName">Loading...</h4>
+                        <p id="menuProfileEmail">...</p>
+                    </div>
+                </div>
+                
+                <div class="menu-title">เมนูผู้ใช้งาน</div>
+                
+                <div class="menu-item" onclick="showSection('shops')">
+                    <span class="icon">🏪</span> ดูร้านค้า
+                </div>
+                
+                <div class="menu-item" onclick="showSection('orders')">
+                    <span class="icon">📦</span> คำสั่งซื้อ
+                </div>
+                
+                <div class="menu-item" onclick="showSection('address')">
+                    <span class="icon">📍</span> ที่อยู่จัดส่ง
+                </div>
+                
+                <div class="menu-item" onclick="showSection('riders')">
+                    <span class="icon">🛵</span> ไรเดอร์ที่พร้อมงาน
+                </div>
+                
+                <div class="menu-item logout-item" onclick="handleLogout()">
+                    <span class="icon">🚪</span> ออกจากระบบ
+                </div>
             </div>
         </nav>
 
@@ -45,7 +80,6 @@
             </div>
 
             <form id="loginForm" onsubmit="handleLogin(event)">
-                
                 <div class="form-group" id="usernameGroup">
                     <label for="username" id="labelUsername">ชื่อผู้ใช้ (Username)</label>
                     <input type="text" id="username" placeholder="กรอกชื่อผู้ใช้ของคุณ">
@@ -75,25 +109,47 @@
             <h1>Singkhon Delivery</h1>
         </div>
 
-        <div class="main-content" id="guestView">
-            <div class="app-logo">🛵</div>
-            <h2>ยินดีต้อนรับ</h2>
-            <p>ระบบจัดการสำหรับร้านค้า ไรเดอร์ และลูกค้า <br>กรุณากดปุ่มเมนู <span>☰</span> มุมซ้ายบนเพื่อเข้าสู่ระบบ</p>
+        <div class="main-content-scroll">
+            
+            <div class="main-content text-center" id="guestView">
+                <div class="app-logo">🛵</div>
+                <h2>ยินดีต้อนรับ</h2>
+                <p>ระบบจัดการสำหรับร้านค้า ไรเดอร์ และลูกค้า <br>กรุณากดปุ่มเมนู <span>☰</span> มุมซ้ายบนเพื่อเข้าสู่ระบบ</p>
+                <button class="btn-login" id="mainLoginBtn" onclick="openLoginModal('customer')" style="margin-top: 30px;">
+                    🛍️ เข้าสู่ระบบลูกค้า
+                </button>
+            </div>
+
+            <div class="main-content" id="dashboardView" style="display: none;">
+                
+                <div id="sec-shops" class="dashboard-section">
+                    <h3>🏪 ร้านค้าใกล้คุณ</h3>
+                    <div class="info-card">ร้้านข้าวมันไก่สิงหนคร (เปิดอยู่)</div>
+                    <div class="info-card">ชานมไข่มุกสิงขร (เปิดอยู่)</div>
+                </div>
+
+                <div id="sec-orders" class="dashboard-section" style="display: none;">
+                    <h3>📦 คำสั่งซื้อของคุณ</h3>
+                    <div class="info-card text-muted">ยังไม่มีรายการคำสั่งซื้อในขณะนี้</div>
+                </div>
+
+                <div id="sec-address" class="dashboard-section" style="display: none;">
+                    <h3>📍 ที่อยู่จัดส่งของคุณ</h3>
+                    <div class="info-card">🏠 บ้านของฉัน: อ.สิงหนคร จ.สงขลา</div>
+                </div>
+
+                <div id="sec-riders" class="dashboard-section" style="display: none;">
+                    <div class="rider-header-box">
+                        <h3>🛵 ไรเดอร์ที่พร้อมรับงาน</h3>
+                        <span class="rider-count-badge" id="riderCount">0 คน</span>
+                    </div>
+                    <div id="riderListContainer">
+                        </div>
+                </div>
+
+            </div>
         </div>
 
-        <div class="main-content profile-content" id="userProfile" style="display: none;">
-            <img id="profileImage" src="" alt="Profile Avatar">
-            <h2 id="profileName">Name</h2>
-            <p id="profileEmail">email@example.com</p>
-            <br>
-            <button class="btn-cancel btn-logout" onclick="handleLogout()">
-                🚪 ออกจากระบบ
-            </button>
-        </div>
-        
-        <button class="btn-login" id="mainLoginBtn" onclick="openLoginModal('customer')">
-            🛍️ เข้าสู่ระบบลูกค้า
-        </button>
     </div>
 
 <script type="module" src="firebase-auth.js"></script>
